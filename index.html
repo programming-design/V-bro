@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en" lang="ar" data-lang="en" data-lang="ar" data-theme="dark-red">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060608">
+<title>V-TWIN BROTHERHOOD — GTA Online Crew</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   THEMES
+══════════════════════════════════════ */
+:root,[data-theme="dark-red"]{
+  --cr:#C0392B;--cr2:#96281B;--cr-glow:rgba(192,57,43,.5);--cr-rgb:192,57,43;
+  --bg:#060608;--s1:#0e0e12;--s2:#13131a;--border:#222230;
+  --text:#E2E2E8;--muted:#6a6a80;--chrome:#b8b8cc;
+  --nav-h:64px;--accent-dc:#5865f2;
+}
+[data-theme="dark-gold"]{
+  --cr:#d4a017;--cr2:#a67c00;--cr-glow:rgba(212,160,23,.5);--cr-rgb:212,160,23;
+  --bg:#07060a;--s1:#0f0e13;--s2:#151320;--border:#25222f;
+  --text:#EEEAE0;--muted:#6e6a58;--chrome:#c8c090;
+}
+[data-theme="dark-blue"]{
+  --cr:#2980b9;--cr2:#1a5f8a;--cr-glow:rgba(41,128,185,.5);--cr-rgb:41,128,185;
+  --bg:#050810;--s1:#0a0f1e;--s2:#0f1428;--border:#1a2040;
+  --text:#d8e4f0;--muted:#5a6880;--chrome:#90b0cc;
+}
+[data-theme="dark-green"]{
+  --cr:#1a9e4a;--cr2:#117a35;--cr-glow:rgba(26,158,74,.5);--cr-rgb:26,158,74;
+  --bg:#050a06;--s1:#090f0a;--s2:#0e1510;--border:#182018;
+  --text:#d0e8d5;--muted:#507060;--chrome:#90c0a0;
+}
+
+/* ══════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter','Cairo',sans-serif;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s,color .4s;
+}
+[data-lang="ar"] body,[data-lang="ar"] *{direction:rtl}
+[data-lang="ar"] .eyebrow::after{margin-right:auto;margin-left:0}
+[data-lang="ar"] .mob-drawer-bottom{left:auto;right:0}
+
+/* ══════════════════════════════════════
+   THEME SWITCHER — DESKTOP SIDE + MOBILE BOTTOM
+══════════════════════════════════════ */
+
+/* ── shared wrapper ── */
+.controls-wrap{
+  position:fixed;z-index:500;
+  display:flex;align-items:center;gap:.5rem;
+}
+
+/* ── Desktop: right side vertical ── */
+@media(min-width:769px){
+  .controls-wrap{
+    top:50%;right:0;
+    flex-direction:column;
+    transform:translateY(-50%);
+  }
+  .theme-panel{
+    display:flex;flex-direction:column;gap:0;
+    border:1px solid var(--border);border-right:none;
+    background:var(--s2);border-radius:6px 0 0 6px;overflow:hidden;
+  }
+  .theme-panel button{width:36px;height:36px}
+  .theme-panel button.active{box-shadow:inset 2px 0 0 #fff}
+  .lang-toggle{
+    display:flex;flex-direction:column;
+    background:var(--s2);border:1px solid var(--border);
+    border-right:none;border-radius:6px 0 0 6px;overflow:hidden;
+  }
+  .lang-btn{padding:.38rem .6rem;font-size:.6rem;writing-mode:horizontal-tb}
+}
+
+/* ── Mobile: bottom bar ── */
+@media(max-width:768px){
+  .controls-wrap{
+    bottom:0;left:0;right:0;top:auto;
+    transform:none;
+    flex-direction:row;
+    justify-content:center;
+    background:rgba(6,6,8,.97);
+    border-top:1px solid var(--border);
+    padding:.55rem 1rem;
+    gap:.6rem;
+  }
+  .theme-panel{
+    display:flex;flex-direction:row;gap:0;
+    border:1px solid var(--border);
+    background:var(--s2);border-radius:4px;overflow:hidden;
+  }
+  .theme-panel button{width:34px;height:34px}
+  .theme-panel button.active{box-shadow:inset 0 -2px 0 #fff}
+  /* hide tooltip on mobile */
+  .theme-panel button::after{display:none}
+  .lang-toggle{
+    display:flex;flex-direction:row;
+    background:var(--s2);border:1px solid var(--border);
+    border-radius:4px;overflow:hidden;
+  }
+  .lang-btn{padding:.4rem .75rem;font-size:.65rem}
+  /* push page content up so bottom bar doesn't cover it */
+  body{padding-bottom:52px}
+}
+
+.theme-panel button{
+  border:none;cursor:pointer;
+  transition:transform .2s,opacity .2s;opacity:.5;position:relative;
+}
+.theme-panel button:hover{opacity:1}
+.theme-panel button.active{opacity:1}
+/* Tooltip — desktop only */
+@media(min-width:769px){
+  .theme-panel button::after{
+    content:attr(data-tip);position:absolute;right:calc(100% + 8px);top:50%;
+    transform:translateY(-50%);background:var(--s2);border:1px solid var(--border);
+    color:var(--text);font-size:.6rem;letter-spacing:.1em;white-space:nowrap;
+    padding:.2rem .5rem;border-radius:3px;opacity:0;pointer-events:none;
+    transition:opacity .2s;
+  }
+  .theme-panel button:hover::after{opacity:1}
+}
+.tp-red{background:#C0392B}
+.tp-gold{background:#d4a017}
+.tp-blue{background:#2980b9}
+.tp-green{background:#1a9e4a}
+
+.lang-toggle{position:static}
+.lang-btn{
+  padding:.35rem .75rem;font-size:.65rem;letter-spacing:.12em;font-weight:600;text-transform:uppercase;
+  background:none;border:none;color:var(--muted);cursor:pointer;
+  transition:background .2s,color .2s;font-family:'Oswald',sans-serif;
+}
+.lang-btn.active{background:var(--cr);color:#fff}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  background:rgba(6,6,8,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);transition:background .3s,border-color .3s;
+}
+.nav-logo{display:flex;align-items:center;gap:.7rem;text-decoration:none;flex-shrink:0}
+.nav-logo svg{width:34px;height:34px;flex-shrink:0;transition:filter .3s}
+.nav-logo:hover svg{filter:drop-shadow(0 0 8px var(--cr-glow))}
+.nav-brand{font-family:'Black Ops One',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--text);line-height:1.15}
+.nav-brand small{display:block;color:var(--cr);font-family:'Oswald',sans-serif;font-weight:400;font-size:.55rem;letter-spacing:.28em;margin-top:.05rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.73rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:color .2s;white-space:nowrap;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--cr);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.nav-links a:hover,.nav-links a.active{color:var(--cr)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:var(--cr)!important;color:#fff!important;padding:.38rem 1rem;border-radius:2px}
+.nav-cta:hover{filter:brightness(1.15)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;z-index:301;flex-shrink:0}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);transition:all .3s;border-radius:1px}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-drawer{
+  position:fixed;inset:0;z-index:299;background:rgba(6,6,8,.99);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);
+}
+.mob-drawer.open{transform:translateX(0)}
+.mob-drawer a{font-family:'Black Ops One',sans-serif;font-size:clamp(1.5rem,6vw,2.2rem);letter-spacing:.1em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color .2s,transform .2s;display:block}
+.mob-drawer a:hover{color:var(--cr);transform:translateX(8px)}
+.mob-cta{background:var(--cr)!important;color:#fff!important;padding:.7rem 2.5rem;border-radius:2px}
+.mob-drawer-bottom{position:absolute;bottom:2.5rem;left:0;right:0;display:flex;gap:1.5rem;justify-content:center}
+.mob-drawer-bottom a{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero{
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:calc(var(--nav-h) + 2rem) 5% 5rem;text-align:center;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('1 (1).png') center 40%/cover no-repeat;
+  filter:brightness(.22) saturate(.45);
+  transform:scale(1.08);
+  transition:transform 10s ease;
+  will-change:transform;
+}
+.hero-bg.loaded{transform:scale(1)}
+/* parallax handled via JS */
+.hero-fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,8,.15) 0%,rgba(6,6,8,.5) 60%,var(--bg) 100%)}
+.hero-radial{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 90%,rgba(var(--cr-rgb),.15) 0%,transparent 70%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(var(--cr-rgb),.04) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--cr-rgb),.04) 1px,transparent 1px);background-size:64px 64px}
+/* Floating particles */
+.particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:2px;height:2px;background:var(--cr);border-radius:50%;animation:float-up linear infinite;opacity:0}
+@keyframes float-up{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.2}100%{transform:translateY(-20vh) scale(1.5);opacity:0}}
+
+.hero-content{position:relative;z-index:2;width:100%;max-width:1100px;display:flex;flex-direction:column;align-items:center}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:rgba(var(--cr-rgb),.1);border:1px solid rgba(var(--cr-rgb),.32);
+  padding:.35rem .9rem;margin-bottom:2rem;
+  font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--cr);border-radius:2px;
+  animation:fadeSlideDown .8s ease .2s both;
+}
+@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+.hero-line1{
+  font-family:'Black Ops One',sans-serif;
+  font-size:clamp(2rem,7.5vw,6.5rem);
+  letter-spacing:.35em;color:var(--muted);line-height:1;
+  white-space:nowrap;display:block;width:100%;
+  animation:heroReveal .9s cubic-bezier(.16,1,.3,1) .3s both;
+}
+.hero-line2{
+  font-family:'Black Ops One',sans-serif;
+  font-size:clamp(2.5rem,9vw,10.5rem);
+  line-height:.88;letter-spacing:.01em;color:var(--text);
+  text-shadow:0 4px 80px rgba(0,0,0,.9);
+  white-space:nowrap;display:block;width:100%;overflow:hidden;
+  animation:heroReveal .9s cubic-bezier(.16,1,.3,1) .45s both;
+}
+@keyframes heroReveal{from{opacity:0;transform:translateY(40px) skewY(2deg)}to{opacity:1;transform:none}}
+.hero-line2 .hi{color:var(--cr);text-shadow:0 0 50px var(--cr-glow),0 4px 80px rgba(0,0,0,.9)}
+@media(max-width:400px){
+  .hero-line2{white-space:normal;word-break:break-word;font-size:clamp(2rem,11vw,3.5rem)}
+  .hero-line1{font-size:clamp(1.4rem,7.5vw,2.5rem);letter-spacing:.2em}
+}
+.hero-tagline{
+  font-family:'Oswald',sans-serif;font-size:clamp(.8rem,1.7vw,1.1rem);
+  font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:1.4rem;
+  animation:heroReveal .9s cubic-bezier(.16,1,.3,1) .6s both;
+}
+.hero-tagline strong{color:var(--chrome);font-weight:500}
+.hero-actions{
+  display:flex;gap:.8rem;justify-content:center;margin-top:2.2rem;flex-wrap:wrap;
+  animation:heroReveal .9s cubic-bezier(.16,1,.3,1) .75s both;
+}
+/* 3D tilt card effect on hero badge */
+.hero-eyebrow{transform-style:preserve-3d;transition:transform .15s}
+
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  color:var(--muted);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
+  animation:bob 2.5s ease-in-out infinite;
+}
+.hero-scroll::before{content:'';width:1px;height:26px;background:linear-gradient(var(--cr),transparent)}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ══════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:.88rem;
+  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  cursor:pointer;border:none;padding:.82rem 1.9rem;
+  transition:transform .15s,box-shadow .2s,background .2s,filter .2s;
+  clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);
+  position:relative;overflow:hidden;
+}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.btn:hover::after{transform:scaleX(1)}
+.btn-red{background:var(--cr);color:#fff}
+.btn-red:hover{filter:brightness(1.15);transform:translateY(-2px);box-shadow:0 10px 36px rgba(var(--cr-rgb),.45)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+.btn-ghost:hover{border-color:var(--cr);color:var(--cr);transform:translateY(-2px)}
+.btn-dc{background:rgba(88,101,242,.15);color:#7289da;border:1px solid rgba(88,101,242,.3);clip-path:none;border-radius:3px}
+.btn-dc:hover{background:rgba(88,101,242,.3);transform:translateY(-2px)}
+.btn-full{width:100%;justify-content:center;clip-path:none;border-radius:3px}
+
+/* ══════════════════════════════════════
+   TICKER
+══════════════════════════════════════ */
+.ticker{background:var(--cr);padding:.44rem 0;overflow:hidden;white-space:nowrap;position:relative;z-index:1}
+.ticker-inner{display:inline-block;animation:tick 40s linear infinite}
+.ti{font-family:'Black Ops One',sans-serif;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.9);margin:0 1.5rem}
+.ti-sep{color:rgba(255,255,255,.3)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════
+   STATS
+══════════════════════════════════════ */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--s1);border-bottom:1px solid var(--border)}
+.stat-item{padding:2rem 1.5rem;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;cursor:default}
+.stat-item:last-child{border-right:none}
+.stat-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cr);transform:scaleX(0);transition:transform .38s;transform-origin:left}
+.stat-item:hover::after{transform:scaleX(1)}
+/* 3D number on hover */
+.stat-item:hover .stat-num{transform:scale(1.08);text-shadow:0 0 30px var(--cr-glow)}
+.stat-num{font-family:'Black Ops One',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--cr);text-shadow:0 0 18px var(--cr-glow);line-height:1;transition:transform .3s,text-shadow .3s}
+.stat-lbl{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+
+/* ══════════════════════════════════════
+   PHOTO STRIP
+══════════════════════════════════════ */
+.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);height:260px;overflow:hidden}
+.ps-item{position:relative;overflow:hidden;cursor:pointer}
+.ps-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.5);transition:filter .5s,transform .6s}
+.ps-item:hover img{filter:brightness(.7) saturate(.8);transform:scale(1.08)}
+.ps-lbl{position:absolute;bottom:0;left:0;right:0;padding:.7rem 1rem;background:linear-gradient(transparent,rgba(0,0,0,.78));font-family:'Oswald',sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);transform:translateY(100%);transition:transform .32s}
+.ps-item:hover .ps-lbl{transform:translateY(0)}
+
+/* ══════════════════════════════════════
+   SECTIONS
+══════════════════════════════════════ */
+.sec{padding:clamp(4rem,8vw,7rem) 5%}
+.sec-alt{background:var(--s1)}
+.sec-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:.63rem;letter-spacing:.4em;text-transform:uppercase;color:var(--cr);margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+.eyebrow::after{content:'';width:32px;height:1px;background:var(--cr);opacity:.5}
+.sec-title{font-family:'Black Ops One',sans-serif;font-size:clamp(1.9rem,4.5vw,4rem);line-height:.92;letter-spacing:.02em;text-transform:uppercase}
+
+/* ══════════════════════════════════════
+   ABOUT — 3D CARD TILT
+══════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-txt p{color:var(--muted);line-height:1.85;font-size:.88rem;margin-top:1.3rem}
+.about-feats{margin-top:2rem;display:flex;flex-direction:column;gap:.95rem}
+.af{display:flex;align-items:flex-start;gap:.85rem;font-size:.85rem;color:var(--muted);line-height:1.6}
+.af-ico{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.af strong{display:block;font-family:'Oswald',sans-serif;font-size:.92rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text);margin-bottom:.18rem}
+.about-visual{
+  position:relative;border-radius:4px;overflow:hidden;aspect-ratio:3/4;
+  transform-style:preserve-3d;
+  transition:transform .1s ease;
+  cursor:default;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.about-visual img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.5)}
+.about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(var(--cr-rgb),.12) 0%,transparent 55%)}
+.about-badge{
+  position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%) translateZ(20px);
+  background:rgba(6,6,8,.88);border:1px solid rgba(var(--cr-rgb),.4);
+  padding:1.1rem 2rem;text-align:center;backdrop-filter:blur(8px);
+  white-space:nowrap;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+}
+.about-badge-name{font-family:'Black Ops One',sans-serif;font-size:1.3rem;letter-spacing:.1em;color:var(--cr)}
+.about-badge-sub{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+
+/* ══════════════════════════════════════
+   MANIFESTO
+══════════════════════════════════════ */
+.manifesto-body{margin-top:2.5rem;border-left:2px solid var(--cr);padding-left:1.8rem;max-width:780px}
+.manifesto-body p{font-family:'Oswald',sans-serif;font-size:clamp(.95rem,1.6vw,1.12rem);font-weight:300;line-height:1.92;color:var(--chrome);letter-spacing:.04em}
+.manifesto-body p+p{margin-top:1.3rem}
+.manifesto-body strong{color:var(--text);font-weight:600}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:4rem}
+.pillar{
+  background:var(--s1);padding:2rem 1.8rem;
+  transition:background .2s,transform .3s;
+  transform-style:preserve-3d;
+}
+.pillar:hover{background:var(--s2);transform:translateY(-4px)}
+.pillar-n{font-family:'Black Ops One',sans-serif;font-size:2rem;color:var(--cr);opacity:.28;line-height:1;margin-bottom:.75rem}
+.pillar-title{font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.45rem}
+.pillar-desc{font-size:.82rem;color:var(--muted);line-height:1.73}
+
+/* ══════════════════════════════════════
+   IMG DIVIDER — PARALLAX
+══════════════════════════════════════ */
+.img-div{height:300px;overflow:hidden;position:relative}
+.img-div-bg{position:absolute;inset:-20%;width:140%;height:140%;object-fit:cover;object-position:center 55%;filter:brightness(.25) saturate(.35);will-change:transform}
+.img-div-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.7rem;background:linear-gradient(90deg,rgba(6,6,8,.7) 0%,rgba(var(--cr-rgb),.05) 50%,rgba(6,6,8,.7) 100%)}
+.img-div-q{font-family:'Black Ops One',sans-serif;font-size:clamp(1.3rem,4vw,3rem);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.92);text-shadow:0 0 40px rgba(var(--cr-rgb),.35);text-align:center;padding:0 5%}
+.img-div-q span{color:var(--cr)}
+.img-div-sub{font-size:.65rem;letter-spacing:.38em;text-transform:uppercase;color:var(--muted);text-align:center}
+
+/* ══════════════════════════════════════
+   ACTIVITIES
+══════════════════════════════════════ */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.act-card{
+  background:var(--s1);border:1px solid var(--border);overflow:hidden;
+  position:relative;
+  transition:border-color .25s,box-shadow .25s;
+  transform-style:preserve-3d;
+  transform:perspective(800px) rotateX(0) rotateY(0);
+  transition:transform .2s ease,border-color .25s,box-shadow .25s;
+}
+.act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cr);transform:scaleX(0);transition:transform .35s;transform-origin:left;z-index:1}
+.act-card:hover{border-color:rgba(var(--cr-rgb),.4);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.act-card:hover::before{transform:scaleX(1)}
+.act-img{height:150px;overflow:hidden;background:var(--s2)}
+.act-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(.4);transition:filter .4s,transform .45s}
+.act-card:hover .act-img img{filter:brightness(.6) saturate(.7);transform:scale(1.07)}
+.act-ico-ph{height:150px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;background:var(--s2)}
+.act-body{padding:1.5rem}
+.act-title{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.45rem}
+.act-desc{font-size:.82rem;color:var(--muted);line-height:1.76}
+.act-tag{display:inline-block;margin-top:.9rem;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cr);border:1px solid rgba(var(--cr-rgb),.25);padding:.18rem .55rem;background:rgba(var(--cr-rgb),.07)}
+
+/* ══════════════════════════════════════
+   MEMBERS
+══════════════════════════════════════ */
+.mem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1px;background:var(--border);margin-top:2.5rem}
+.mem-card{background:var(--s2);padding:1.6rem 1.5rem;transition:background .2s,transform .3s;position:relative;overflow:hidden}
+.mem-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cr);transform:scaleX(0);transition:transform .3s}
+.mem-card:hover{background:#171720;transform:translateY(-3px)}
+.mem-card:hover::after{transform:scaleX(1)}
+.mem-av{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--s1);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:.9rem;
+  overflow:hidden;flex-shrink:0;
+}
+.mem-av img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.mem-card.leader .mem-av{border-color:var(--cr);box-shadow:0 0 16px var(--cr-glow)}
+.mem-card.officer .mem-av{border-color:#b8922a;box-shadow:0 0 12px rgba(184,146,42,.35)}
+.mem-name{font-family:'Oswald',sans-serif;font-size:.98rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.mem-rank{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.18rem}
+.mem-card.leader .mem-rank{color:var(--cr)}
+.mem-card.officer .mem-rank{color:#b8922a}
+.mem-stats{display:flex;gap:.9rem;margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--border);flex-wrap:wrap}
+.ms{font-size:.65rem;color:var(--muted)}
+.ms strong{display:block;font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:600;color:var(--text)}
+
+/* ══════════════════════════════════════
+   DISCORD
+══════════════════════════════════════ */
+.dc-sec{position:relative;overflow:hidden;padding:clamp(4rem,8vw,7rem) 5%}
+.dc-sec-bg{position:absolute;inset:0;z-index:0}
+.dc-sec-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.1) saturate(.2)}
+.dc-sec-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,6,8,.97) 0%,rgba(6,6,8,.88) 55%,rgba(88,101,242,.07) 100%)}
+.dc-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1;max-width:1100px;margin:0 auto}
+.dc-txt p{color:var(--muted);line-height:1.85;font-size:.88rem;margin-top:1.3rem}
+.dc-feats{margin-top:1.8rem;display:flex;flex-direction:column;gap:.78rem}
+.dc-feat{display:flex;align-items:center;gap:.8rem;font-size:.83rem;color:var(--muted)}
+.dc-feat::before{content:'';width:6px;height:6px;background:#5865f2;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px rgba(88,101,242,.7)}
+.dc-card{
+  background:rgba(14,14,20,.92);border:1px solid rgba(88,101,242,.22);
+  padding:2.5rem 2rem;text-align:center;border-radius:4px;backdrop-filter:blur(12px);
+  transition:transform .3s,box-shadow .3s;
+}
+.dc-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(88,101,242,.15)}
+.dc-card-ico{font-size:3rem;display:block;margin-bottom:.8rem;filter:drop-shadow(0 0 18px rgba(88,101,242,.55))}
+.dc-card-name{font-family:'Black Ops One',sans-serif;font-size:1.4rem;letter-spacing:.08em;margin-bottom:.3rem}
+.dc-card-sub{font-size:.72rem;color:var(--muted);margin-bottom:1rem;letter-spacing:.08em}
+.dc-online{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;color:#57f287;background:rgba(87,242,135,.07);padding:.26rem .75rem;border:1px solid rgba(87,242,135,.15);border-radius:20px;margin-bottom:1.5rem}
+.dc-online::before{content:'';width:6px;height:6px;background:#57f287;border-radius:50%;box-shadow:0 0 6px #57f287;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ══════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════ */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.testi-card{background:var(--s2);border:1px solid var(--border);padding:1.8rem;position:relative;overflow:hidden;transition:border-color .2s,transform .25s,box-shadow .25s}
+.testi-card:hover{border-color:rgba(var(--cr-rgb),.28);transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.testi-big-q{position:absolute;top:.4rem;right:1rem;font-family:'Black Ops One',sans-serif;font-size:3.5rem;color:var(--cr);opacity:.07;line-height:1;pointer-events:none}
+.testi-stars{color:var(--cr);font-size:.78rem;letter-spacing:.1em;margin-bottom:.85rem}
+.testi-txt{font-size:.82rem;color:var(--muted);line-height:1.84;font-style:italic}
+.testi-auth{display:flex;align-items:center;gap:.75rem;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}
+.testi-av{width:33px;height:33px;border-radius:50%;background:var(--cr);display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0}
+.testi-name{font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+.testi-role{font-size:.6rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* ══════════════════════════════════════
+   ALLIED CREWS
+══════════════════════════════════════ */
+.allied-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.allied-card{
+  background:var(--s2);padding:1.8rem 1.2rem;text-align:center;
+  transition:background .25s,transform .25s,box-shadow .25s;
+  cursor:default;
+}
+.allied-card:hover{background:#16161f;transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+/* Logo container */
+.allied-logo{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--s1);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto .85rem;overflow:hidden;
+  transition:border-color .25s,box-shadow .25s;
+}
+.allied-card:hover .allied-logo{border-color:var(--cr);box-shadow:0 0 16px var(--cr-glow)}
+.allied-logo img{width:100%;height:100%;object-fit:cover}
+.allied-logo-fallback{font-size:2rem;line-height:1}
+.allied-name{font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.35rem}
+.allied-tag-pill{display:inline-block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cr);border:1px solid rgba(var(--cr-rgb),.2);padding:.12rem .45rem}
+.allied-open{
+  background:transparent;border:1px dashed rgba(255,255,255,.08);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;min-height:150px;
+}
+.allied-open span{font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.allied-open a{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cr);text-decoration:none;border:1px solid rgba(var(--cr-rgb),.3);padding:.28rem .7rem;transition:background .2s}
+.allied-open a:hover{background:rgba(var(--cr-rgb),.08)}
+
+/* ══════════════════════════════════════
+   RULES
+══════════════════════════════════════ */
+.rules-list{margin-top:2.5rem;max-width:800px}
+.rule{display:flex;gap:1.5rem;padding:1.35rem 0;border-bottom:1px solid var(--border);align-items:flex-start;transition:padding-left .2s}
+.rule:hover{padding-left:.5rem}
+.rule-n{font-family:'Black Ops One',sans-serif;font-size:1.4rem;color:var(--cr);opacity:.28;min-width:44px;line-height:1;padding-top:.2rem;flex-shrink:0}
+.rule-body{font-size:.86rem;color:var(--muted);line-height:1.8}
+.rule-body strong{display:block;color:var(--text);font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
+
+/* ══════════════════════════════════════
+   JOIN
+══════════════════════════════════════ */
+.join-sec{position:relative;overflow:hidden;padding:clamp(5rem,10vw,8rem) 5%;text-align:center}
+.join-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.1) saturate(.3)}
+.join-overlay{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(var(--cr-rgb),.07) 0%,rgba(6,6,8,.96) 70%)}
+.join-wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Black Ops One',sans-serif;font-size:min(26vw,240px);color:rgba(var(--cr-rgb),.025);pointer-events:none;user-select:none;letter-spacing:-.03em;white-space:nowrap}
+.join-inner{position:relative;z-index:1}
+.join-title{font-family:'Black Ops One',sans-serif;font-size:clamp(2.8rem,10vw,8rem);line-height:.88;letter-spacing:.02em;text-transform:uppercase}
+.join-sub{color:var(--muted);max-width:540px;margin:1.4rem auto 2.5rem;line-height:1.85;font-size:.88rem}
+.steps-row{display:flex;justify-content:center;gap:0;margin-top:3.5rem;flex-wrap:wrap;max-width:820px;margin-left:auto;margin-right:auto}
+.step-item{flex:1;min-width:130px;padding:1.5rem 1rem;text-align:center;position:relative;transition:transform .25s}
+.step-item:hover{transform:translateY(-4px)}
+.step-item:not(:last-child)::after{content:'→';position:absolute;right:-6px;top:calc(50% - .5rem);color:var(--border);font-size:1.1rem;line-height:1}
+.step-num{font-family:'Black Ops One',sans-serif;font-size:2.2rem;color:var(--cr);text-shadow:0 0 18px var(--cr-glow);line-height:1;margin-bottom:.4rem}
+.step-ttl{font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.step-desc{font-size:.73rem;color:var(--muted);line-height:1.6}
+.plat-row{display:flex;gap:.6rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.plat-tag{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:.24rem .62rem}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 5% 2rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.footer-brand .fl{font-family:'Black Ops One',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--cr);text-shadow:0 0 10px var(--cr-glow)}
+.footer-brand .fs{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.footer-brand p{font-size:.8rem;color:var(--muted);max-width:230px;line-height:1.72;margin-top:.9rem}
+.footer-col h4{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--chrome);margin-bottom:1.1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul a{font-size:.77rem;color:var(--muted);text-decoration:none;letter-spacing:.05em;transition:color .2s,padding-left .2s}
+.footer-col ul a:hover{color:var(--cr);padding-left:.3rem}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1200px;margin:1.5rem auto 0;font-size:.68rem;color:var(--muted)}
+.footer-bottom-links{display:flex;gap:1.2rem}
+.footer-bottom-links a{color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-bottom-links a:hover{color:var(--cr)}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL — ADVANCED
+══════════════════════════════════════ */
+[data-r]{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+[data-r].on{opacity:1;transform:translateY(0)}
+[data-r="left"]{transform:translateX(-40px)}
+[data-r="left"].on{transform:translateX(0)}
+[data-r="right"]{transform:translateX(40px)}
+[data-r="right"].on{transform:translateX(0)}
+[data-r="zoom"]{transform:scale(.92)}
+[data-r="zoom"].on{transform:scale(1)}
+[data-r="flip"]{transform:perspective(600px) rotateX(18deg);opacity:0}
+[data-r="flip"].on{transform:perspective(600px) rotateX(0);opacity:1}
+/* Stagger children */
+[data-stagger] > *{opacity:0;transform:translateY(24px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+[data-stagger].on > *:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+[data-stagger].on > *:nth-child(2){opacity:1;transform:none;transition-delay:.12s}
+[data-stagger].on > *:nth-child(3){opacity:1;transform:none;transition-delay:.19s}
+[data-stagger].on > *:nth-child(4){opacity:1;transform:none;transition-delay:.26s}
+[data-stagger].on > *:nth-child(5){opacity:1;transform:none;transition-delay:.33s}
+[data-stagger].on > *:nth-child(6){opacity:1;transform:none;transition-delay:.4s}
+[data-stagger].on > *:nth-child(7){opacity:1;transform:none;transition-delay:.47s}
+[data-stagger].on > *:nth-child(8){opacity:1;transform:none;transition-delay:.54s}
+[data-stagger].on > *:nth-child(9){opacity:1;transform:none;transition-delay:.61s}
+
+/* ══════════════════════════════════════
+   ARABIC OVERRIDES
+══════════════════════════════════════ */
+[data-lang="ar"] .hero-line1,[data-lang="ar"] .hero-line2{font-family:'Cairo','Black Ops One',sans-serif;letter-spacing:0}
+[data-lang="ar"] .sec-title{font-family:'Cairo',sans-serif;letter-spacing:0;line-height:1.1}
+[data-lang="ar"] .eyebrow{letter-spacing:.1em}
+[data-lang="ar"] .manifesto-body{border-left:none;border-right:2px solid var(--cr);padding-left:0;padding-right:1.8rem}
+[data-lang="ar"] .rule{flex-direction:row-reverse}
+[data-lang="ar"] .dc-feat::before{order:2}
+[data-lang="ar"] .about-feats .af{flex-direction:row-reverse;text-align:right}
+[data-lang="ar"] .footer-col ul a:hover{padding-left:0;padding-right:.3rem}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:1024px){
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-visual{aspect-ratio:16/7;order:-1}
+  .act-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-grid{grid-template-columns:repeat(2,1fr)}
+  .dc-inner{grid-template-columns:1fr;gap:3rem}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .pillars{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  :root{--nav-h:58px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .stat-item:nth-child(3){border-right:1px solid var(--border);border-top:1px solid var(--border)}
+  .stat-item:nth-child(4){border-right:none;border-top:1px solid var(--border)}
+  .photo-strip{grid-template-columns:1fr;height:auto}
+  .ps-item{height:170px}
+  .act-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .img-div{height:200px}
+  .step-item:not(:last-child)::after{display:none}
+  .step-item{flex:0 0 calc(50% - .5rem);min-width:0}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+@media(max-width:520px){
+  .hero-actions{flex-direction:column;align-items:center}
+  .hero-actions .btn{width:100%;max-width:300px;justify-content:center;clip-path:none;border-radius:3px}
+  .mem-grid{grid-template-columns:repeat(2,1fr)}
+  .step-item{flex:0 0 100%}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-col:not(:first-child){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ CONTROLS (theme + lang) ══ -->
+<div class="controls-wrap">
+  <div class="theme-panel">
+    <button class="tp-red active" data-theme="dark-red" data-tip="Dark Red" onclick="setTheme('dark-red',this)" aria-label="Red theme"></button>
+    <button class="tp-gold" data-theme="dark-gold" data-tip="Dark Gold" onclick="setTheme('dark-gold',this)" aria-label="Gold theme"></button>
+    <button class="tp-blue" data-theme="dark-blue" data-tip="Dark Blue" onclick="setTheme('dark-blue',this)" aria-label="Blue theme"></button>
+    <button class="tp-green" data-theme="dark-green" data-tip="Dark Green" onclick="setTheme('dark-green',this)" aria-label="Green theme"></button>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+    <button class="lang-btn" onclick="setLang('ar',this)">AR</button>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <polygon points="17,2 32,10 32,24 17,32 2,24 2,10" fill="#13131a" stroke="var(--cr)" stroke-width="1.5"/>
+      <text x="17" y="23" font-family="Georgia,serif" font-size="14" fill="var(--cr)" text-anchor="middle" font-weight="bold">V</text>
+    </svg>
+    <div class="nav-brand">V-TWIN <small data-en="Brotherhood" data-ar="الأخوّة">Brotherhood</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about" data-en="About" data-ar="عن الكرو">About</a></li>
+    <li><a href="#manifesto" data-en="Manifesto" data-ar="مانيفستو">Manifesto</a></li>
+    <li><a href="#activities" data-en="Rides" data-ar="الأنشطة">Rides</a></li>
+    <li><a href="#members" data-en="Roster" data-ar="الأعضاء">Roster</a></li>
+    <li><a href="#discord" data-en="Discord" data-ar="ديسكورد">Discord</a></li>
+    <li><a href="#join" class="nav-cta" data-en="Prospect" data-ar="انضم">Prospect</a></li>
+  </ul>
+  <button class="hamburger" id="hamBtn" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="mob-drawer" id="mobDrawer">
+  <a href="#about" class="mob-link" data-en="About" data-ar="عن الكرو">About</a>
+  <a href="#manifesto" class="mob-link" data-en="Manifesto" data-ar="مانيفستو">Manifesto</a>
+  <a href="#activities" class="mob-link" data-en="Rides" data-ar="الأنشطة">Rides</a>
+  <a href="#members" class="mob-link" data-en="Roster" data-ar="الأعضاء">Roster</a>
+  <a href="#discord" class="mob-link" data-en="Discord" data-ar="ديسكورد">Discord</a>
+  <a href="#join" class="mob-cta mob-link" data-en="Prospect Now" data-ar="انضم الآن">Prospect Now</a>
+  <div class="mob-drawer-bottom">
+    <a href="https://discord.gg/M8JjGRSwhC" target="_blank" >Discord</a>
+    <a href="#">Rockstar SC</a>
+    <a href="#">Instagram</a>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-radial"></div>
+  <div class="hero-grid"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span data-en="⬥ GTA Online MC Crew · Est. 2025 ⬥" data-ar="⬥ كرو GTA Online  · تأسس 2025 ⬥">⬥ GTA Online MC Crew · Est. 2025 ⬥</span>
+    </div>
+    <span class="hero-line1" data-en="V-TWIN" data-ar="V-TWIN">V-TWIN</span>
+    <span class="hero-line2"><span data-en="BROTH" data-ar="الأخــــــ">BROTH</span><span class="hi" data-en="ER" data-ar="ــــــــ">ER</span><span data-en="HOOD" data-ar="ــــوّة">HOOD</span></span>
+    <p class="hero-tagline">
+      <span data-en="The road is long." data-ar="الطريق طويل.">The road is long.</span>
+      <strong data-en="We ride it together." data-ar="نسلكه معاً.">We ride it together.</strong>
+    </p>
+    <div class="hero-actions">
+      <a href="#join" class="btn btn-red">🏍️ <span data-en="Become a Prospect" data-ar="انضم كـ Prospect">Become a Prospect</span></a>
+      <a href="#discord" class="btn btn-dc">🎮 <span data-en="Join Discord" data-ar="انضم للديسكورد">Join Discord</span></a>
+      <a href="#about" class="btn btn-ghost"><span data-en="Our Story" data-ar="قصتنا">Our Story</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span data-en="Scroll" data-ar="اسحب">Scroll</span></div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ti" data-en="V-TWIN BROTHERHOOD" data-ar="V-TWIN BROTHERHOOD">V-TWIN BROTHERHOOD</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="GTA ONLINE MC" data-ar="جي تي إيه أونلاين">GTA ONLINE MC</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="LOYALTY ABOVE ALL" data-ar="الولاء فوق كل شيء">LOYALTY ABOVE ALL</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="RIDE OR DIE" data-ar="معاً أو لا شيء">RIDE OR DIE</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="DISCORD SERVER LIVE" data-ar="السيرفر يعمل الآن">DISCORD SERVER LIVE</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="HEISTS · RACES · MC BUSINESS" data-ar="هيست · سباقات · أعمال">HEISTS · RACES · MC BUSINESS</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="V-TWIN BROTHERHOOD" data-ar="V-TWIN BROTHERHOOD">V-TWIN BROTHERHOOD</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="GTA ONLINE MC" data-ar="جي تي إيه أونلاين">GTA ONLINE MC</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="LOYALTY ABOVE ALL" data-ar="الولاء فوق كل شيء">LOYALTY ABOVE ALL</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="RIDE OR DIE" data-ar="معاً أو لا شيء">RIDE OR DIE</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="DISCORD SERVER LIVE" data-ar="السيرفر يعمل الآن">DISCORD SERVER LIVE</span><span class="ti-sep"> ✦ </span>
+    <span class="ti" data-en="HEISTS · RACES · MC BUSINESS" data-ar="هيست · سباقات · أعمال">HEISTS · RACES · MC BUSINESS</span><span class="ti-sep"> ✦ </span>
+  </div>
+</div>
+
+<!-- ══ STATS ══ -->
+<div class="stats-bar" data-stagger>
+  <div class="stat-item"><div class="stat-num" data-count="120">0</div><div class="stat-lbl" data-en="Active Members" data-ar="أعضاء نشطون">Active Members</div></div>
+  <div class="stat-item"><div class="stat-num" data-count="480">0</div><div class="stat-lbl" data-en="Heists Completed" data-ar="هيست منجز">Heists Completed</div></div>
+  <div class="stat-item"><div class="stat-num" data-count="15">0</div><div class="stat-lbl" data-en="Crew Rank" data-ar="رانك الكرو">Crew Rank</div></div>
+  <div class="stat-item"><div class="stat-num" data-count="3">0</div><div class="stat-lbl" data-en="Years Riding" data-ar="سنوات من الركوب">Years Riding</div></div>
+</div>
+
+<!-- ══ PHOTO STRIP ══ -->
+<div class="photo-strip" aria-hidden="true">
+  <div class="ps-item">
+    <img src="1 (1).png" alt="Night ride" loading="lazy">
+    <div class="ps-lbl" data-en="Night Rides" data-ar="رحلات ليلية">Night Rides</div>
+  </div>
+  <div class="ps-item">
+    <img src="1 (2).png" alt="Brotherhood" loading="lazy">
+    <div class="ps-lbl" data-en="Brotherhood" data-ar="الأخوّة">Brotherhood</div>
+  </div>
+  <div class="ps-item">
+    <img src="1 (3).png" alt="Los Santos" loading="lazy">
+    <div class="ps-lbl" data-en="Los Santos" data-ar="لوس سانتوس">Los Santos</div>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="sec">
+  <div class="sec-inner">
+    <div class="about-grid">
+      <div class="about-txt" data-r="left">
+        <div class="eyebrow" data-en="Who we are" data-ar="من نحن">Who we are</div>
+        <h2 class="sec-title" data-en="More Than<br>A Crew" data-ar="أكثر من<br>مجرد كرو">More Than<br>A Crew</h2>
+        <p data-en="V-Twin Brotherhood started as a handful of riders tired of the chaos in Los Santos public lobbies — griefed businesses, toxic sessions, no backup. We built something different."
+           data-ar="بدأ V-Twin Brotherhood كمجموعة صغيرة من الراكبين الذين سئموا من فوضى اللوبيات العامة في لوس سانتوس — أعمال مدمرة، جلسات سامة، ولا دعم. بنينا شيئاً مختلفاً.">
+          V-Twin Brotherhood started as a handful of riders tired of the chaos in Los Santos public lobbies — griefed businesses, toxic sessions, no backup. We built something different.</p>
+        <p data-en="We are an MC-style crew in GTA Online that runs operations the right way: coordinated, loyal, and with a code. Every patch earns its place. Every brother has your back."
+           data-ar="نحن كرو بأسلوب MC في GTA Online يدير العمليات بالطريقة الصحيحة: منسق، مخلص، وبضابط. كل عضو يكسب مكانه. كل أخ يدعمك.">
+          We are an MC-style crew in GTA Online that runs operations the right way: coordinated, loyal, and with a code. Every patch earns its place. Every brother has your back.</p>
+        <div class="about-feats">
+          <div class="af"><span class="af-ico">🔴</span><div><strong data-en="Organized Operations" data-ar="عمليات منظمة">Organized Operations</strong><span data-en="From MC businesses to Cayo Perico — everything coordinated via Discord." data-ar="من أعمال MC إلى Cayo Perico — كل شيء منسق عبر Discord.">From MC businesses to Cayo Perico — everything coordinated via Discord.</span></div></div>
+          <div class="af"><span class="af-ico">🛡️</span><div><strong data-en="Anti-Grief Protection" data-ar="حماية من المزعجين">Anti-Grief Protection</strong><span data-en="Active patrol squad. Call for backup, we respond within minutes." data-ar="فريق دوريات نشط. اطلب النجدة، نصل خلال دقائق.">Active patrol squad. Call for backup, we respond within minutes.</span></div></div>
+          <div class="af"><span class="af-ico">🤝</span><div><strong data-en="Real Brotherhood" data-ar="أخوّة حقيقية">Real Brotherhood</strong><span data-en="Members who genuinely help each other level up and make money." data-ar="أعضاء يساعدون بعضهم فعلاً في التطور وجمع المال.">Members who genuinely help each other level up and make money.</span></div></div>
+          <div class="af"><span class="af-ico">🌍</span><div><strong data-en="All Platforms" data-ar="جميع المنصات">All Platforms</strong><span data-en="PS4/PS5, Xbox, and PC — if you ride, you belong." data-ar="PS4/PS5, Xbox, و PC — إذا ركبت، فأنت تنتمي.">PS4/PS5, Xbox, and PC — if you ride, you belong.</span></div></div>
+        </div>
+      </div>
+      <div class="about-visual" data-r="right" id="tiltCard">
+        <img src="1.png" alt="Motorcycle" loading="lazy">
+        <div class="about-badge">
+          <div class="about-badge-name">V-TWIN</div>
+          <div class="about-badge-sub" data-en="Brotherhood · GTA Online" data-ar="الأخوّة · GTA Online">Brotherhood · GTA Online</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MANIFESTO ══ -->
+<section id="manifesto" class="sec sec-alt">
+  <div class="sec-inner">
+    <div data-r>
+      <div class="eyebrow" data-en="What we stand for" data-ar="ما نؤمن به">What we stand for</div>
+      <h2 class="sec-title" data-en="The Brotherhood<br>Manifesto" data-ar="مانيفستو<br>الأخوّة">The Brotherhood<br>Manifesto</h2>
+    </div>
+    <div class="manifesto-body" data-r="zoom">
+      <p><span data-en="We are the V-Twin Brotherhood. We didn't form to be the biggest crew — we formed to be the " data-ar="نحن V-Twin Brotherhood. لم نتشكل لنكون الكرو الأكبر — بل تشكلنا لنكون ">We are the V-Twin Brotherhood. We didn't form to be the biggest crew — we formed to be the </span><strong data-en="best one to ride with." data-ar="الأفضل للركوب معهم.">best one to ride with.</strong></p>
+      <p><span data-en="Los Santos is a warzone of griefers and randoms who take without giving. We built a different kind of operation — one where " data-ar="لوس سانتوس ساحة حرب من المزعجين والغرباء الذين يأخذون دون أن يعطوا. بنينا نوعاً مختلفاً من العمليات — حيث ">Los Santos is a warzone of griefers and randoms who take without giving. We built a different kind of operation — one where </span><strong data-en="every member is family" data-ar="كل عضو هو عائلة">every member is family</strong><span data-en=", and every mission is run with discipline." data-ar="، وكل مهمة تُنفَّذ بانضباط.">, and every mission is run with discipline.</span></p>
+      <p><span data-en="The road is long and Los Santos never sleeps. But no V-Twin brother rides alone." data-ar="الطريق طويل ولوس سانتوس لا تنام أبداً. لكن لا يركب أي أخ في V-Twin وحيداً.">The road is long and Los Santos never sleeps. But no V-Twin brother rides alone.</span></p>
+    </div>
+    <div class="pillars" data-stagger>
+      <div class="pillar"><div class="pillar-n">I</div><div class="pillar-title" data-en="Loyalty" data-ar="الولاء">Loyalty</div><div class="pillar-desc" data-en="Your brothers come first. We defend each other in session, we back each other outside it. No one is left behind on these streets." data-ar="إخوتك أولاً. ندافع عن بعضنا في الجلسة وخارجها. لا أحد يُترك خلفنا في هذه الشوارع.">Your brothers come first. We defend each other in session, we back each other outside it. No one is left behind on these streets.</div></div>
+      <div class="pillar"><div class="pillar-n">II</div><div class="pillar-title" data-en="Code" data-ar="الضابط">Code</div><div class="pillar-desc" data-en="We operate with a code. No griefing allies, no toxicity, no power tripping. Respect is the currency of this club." data-ar="نعمل بضابط. لا إزعاج للحلفاء، ولا سمية، ولا تسلط. الاحترام هو عملة هذا النادي.">We operate with a code. No griefing allies, no toxicity, no power tripping. Respect is the currency of this club.</div></div>
+      <div class="pillar"><div class="pillar-n">III</div><div class="pillar-title" data-en="Action" data-ar="العمل">Action</div><div class="pillar-desc" data-en="We don't wait for others to fix sessions. We handle griefers, protect members, and run operations with precision." data-ar="لا ننتظر الآخرين لإصلاح الجلسات. نتعامل مع المزعجين، نحمي الأعضاء، وننفذ العمليات بدقة.">We don't wait for others to fix sessions. We handle griefers, protect members, and run operations with precision.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMAGE DIVIDER ══ -->
+<div class="img-div">
+  <img class="img-div-bg" src="1 (4).png" alt="" loading="lazy" id="parallaxImg">
+  <div class="img-div-overlay">
+    <p class="img-div-q"><span data-en="No brother rides " data-ar="لا أحد يركب ">No brother rides </span><span class="hi" data-en="alone" data-ar="وحيداً">alone</span></p>
+    <p class="img-div-sub" data-en="Los Santos · Blaine County · Everywhere" data-ar="لوس سانتوس · بلين كاونتي · في كل مكان">Los Santos · Blaine County · Everywhere</p>
+  </div>
+</div>
+
+<!-- ══ ACTIVITIES ══ -->
+<section id="activities" class="sec">
+  <div class="sec-inner">
+    <div data-r>
+      <div class="eyebrow" data-en="What we do" data-ar="ماذا نفعل">What we do</div>
+      <h2 class="sec-title" data-en="Life in<br>The Club" data-ar="الحياة في<br>النادي">Life in<br>The Club</h2>
+    </div>
+    <div class="act-grid" data-stagger>
+      <div class="act-card">
+        <div class="act-img"><img src="1 (5).png" alt="MC Business" loading="lazy"></div>
+        <div class="act-body"><div class="act-title" data-en="MC Business" data-ar="أعمال MC">MC Business</div><div class="act-desc" data-en="We run the full MC empire together — coordinated sells across all businesses, zero losses, maximum profit, maximum protection." data-ar="ندير إمبراطورية MC الكاملة معاً — مبيعات منسقة عبر جميع الأعمال، صفر خسائر، أقصى ربح، أقصى حماية.">We run the full MC empire together — coordinated sells across all businesses, zero losses, maximum profit, maximum protection.</div><span class="act-tag" data-en="Daily Operations" data-ar="عمليات يومية">Daily Operations</span></div>
+      </div>
+      <div class="act-card">
+        <div class="act-img"><img src="1 (1).png" alt="Crew Rides" loading="lazy"></div>
+        <div class="act-body"><div class="act-title" data-en="Crew Rides" data-ar="رحلات الكرو">Crew Rides</div><div class="act-desc" data-en="Weekly club rides across the map. San Andreas, Blaine County, the city. Just bikes, brothers, and the open road." data-ar="رحلات أسبوعية عبر الخريطة. سان أندرياس، بلين كاونتي، المدينة. فقط دراجات، وإخوة، والطريق المفتوح.">Weekly club rides across the map. San Andreas, Blaine County, the city. Just bikes, brothers, and the open road.</div><span class="act-tag" data-en="Every Weekend" data-ar="كل أسبوع">Every Weekend</span></div>
+      </div>
+      <div class="act-card">
+        <div class="act-ico-ph">💰</div>
+        <div class="act-body"><div class="act-title" data-en="Heists" data-ar="هيست">Heists</div><div class="act-desc" data-en="Cayo Perico, Doomsday, Casino. We run them clean, split fair, and help every member build their empire from scratch." data-ar="كايو بيريكو، يوم القيامة، الكازينو. ننفذها بنظافة، نقسم بعدل، ونساعد كل عضو على بناء إمبراطوريته.">Cayo Perico, Doomsday, Casino. We run them clean, split fair, and help every member build their empire from scratch.</div><span class="act-tag" data-en="High Priority" data-ar="أولوية عالية">High Priority</span></div>
+      </div>
+      <div class="act-card">
+        <div class="act-ico-ph">⚔️</div>
+        <div class="act-body"><div class="act-title" data-en="Crew Wars" data-ar="حروب الكرو">Crew Wars</div><div class="act-desc" data-en="When another crew wants smoke, they get the whole Brotherhood. Organized PvP with real strategy — not random trolling." data-ar="عندما يريد كرو آخر مواجهة، يواجه الأخوّة كلها. PvP منظم باستراتيجية حقيقية.">When another crew wants smoke, they get the whole Brotherhood. Organized PvP with real strategy — not random trolling.</div><span class="act-tag" data-en="Competitive" data-ar="تنافسي">Competitive</span></div>
+      </div>
+      <div class="act-card">
+        <div class="act-ico-ph">🛡️</div>
+        <div class="act-body"><div class="act-title" data-en="Anti-Grief Patrol" data-ar="دورية مكافحة الإزعاج">Anti-Grief Patrol</div><div class="act-desc" data-en="We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed." data-ar="نحمي الأعضاء والحلفاء من المزعجين. إذا تعرضت للهجوم في الجلسة — اتصل بالأخوّة. استجابة سريعة مضمونة.">We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed.</div><span class="act-tag" data-en="Always Active" data-ar="نشط دائماً">Always Active</span></div>
+      </div>
+      <div class="act-card">
+        <div class="act-ico-ph">🎯</div>
+        <div class="act-body"><div class="act-title" data-en="Club Events" data-ar="فعاليات النادي">Club Events</div><div class="act-desc" data-en="Monthly internal tournaments, race nights, challenges, and reward events for the most active members in the Brotherhood." data-ar="بطولات داخلية شهرية، ليالي سباق، تحديات، وفعاليات مكافآت لأكثر الأعضاء نشاطاً.">Monthly internal tournaments, race nights, challenges, and reward events for the most active members in the Brotherhood.</div><span class="act-tag" data-en="Monthly" data-ar="شهرياً">Monthly</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MEMBERS ══ -->
+<section id="members" class="sec sec-alt">
+  <div class="sec-inner">
+    <div data-r>
+      <div class="eyebrow" data-en="The Patch Holders" data-ar="حاملو الشارة">The Patch Holders</div>
+      <h2 class="sec-title" data-en="Brotherhood<br>Roster" data-ar="قائمة<br>الأعضاء">Brotherhood<br>Roster</h2>
+    </div>
+    <!-- 
+      HOW TO ADD PROFILE PHOTO:
+      Replace the fallback letter span with:
+      <img src="YOUR_PHOTO.jpg" alt="name">
+      inside the .mem-av div.
+      If no photo, the colored letter initial shows automatically.
+    -->
+    <div class="mem-grid" data-stagger>
+
+      <div class="mem-card leader">
+        <div class="mem-av" data-initial="Y">
+          <img src="members/yassine.jpg" alt="Yassine.124" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">Yassine.124</div>
+        <div class="mem-rank" data-en="President" data-ar="الرئيس">President</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>460</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>1.4K</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$500M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card officer">
+        <div class="mem-av" data-initial="E">
+          <img src="members/eren.jpg" alt="Eren_YG" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">Eren_YG</div>
+        <div class="mem-rank" data-en="Vice President" data-ar="نائب الرئيس">Vice President</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>215</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>980</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$1.9B</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card officer">
+        <div class="mem-av" data-initial="K">
+          <img src="members/komcaptain.jpg" alt="KOMCAPTAIN" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">KOMCAPTAIN</div>
+        <div class="mem-rank" data-en="Sergeant at Arms" data-ar="رقيب السلاح">Sergeant at Arms</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>284</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>49.9K</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$720M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card officer">
+        <div class="mem-av" data-initial="L">
+          <img src="members/lusitano.jpg" alt="IILusitanoII" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">IILusitanoII</div>
+        <div class="mem-rank" data-en="Sergeant at Arms" data-ar="رقيب السلاح">Sergeant at Arms</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>368</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>30.9K</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$520M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card officer">
+        <div class="mem-av" data-initial="S">
+          <img src="members/strike.jpg" alt="IlSTRIKElI" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">IlSTRIKElI</div>
+        <div class="mem-rank" data-en="Road Captain" data-ar="قائد الطريق">Road Captain</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>172</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>760</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$420M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-av" data-initial="M">
+          <img src="members/mhypeeer.jpg" alt="mHypeeer" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">mHypeeer</div>
+        <div class="mem-rank" data-en="Full Patch" data-ar="عضو كامل">Full Patch</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>155</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>640</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$163M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-av" data-initial="I">
+          <img src="members/ilyas.jpg" alt="_ilyaaaaaas_" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">_ilyaaaaaas_</div>
+        <div class="mem-rank" data-en="Full Patch" data-ar="عضو كامل">Full Patch</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>340</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>580</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$360M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-av" data-initial="T">
+          <img src="members/tiger.jpg" alt="__NotTiger__" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">__NotTiger__</div>
+        <div class="mem-rank" data-en="Full Patch" data-ar="عضو كامل">Full Patch</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>128</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>510</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$520M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+      <div class="mem-card">
+        <div class="mem-av" data-initial="O">
+          <img src="members/oscar.jpg" alt="oscardelta23" onerror="this.style.display='none';this.parentElement.setAttribute('data-show-initial','1')">
+        </div>
+        <div class="mem-name">oscardelta23</div>
+        <div class="mem-rank" data-en="Prospect" data-ar="مرشح">Prospect</div>
+        <div class="mem-stats">
+          <div class="ms"><strong>253</strong><span data-en="Rank" data-ar="رانك">Rank</span></div>
+          <div class="ms"><strong>380</strong><span data-en="Kills" data-ar="قتل">Kills</span></div>
+          <div class="ms"><strong>$820M</strong><span data-en="Cash" data-ar="نقود">Cash</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ DISCORD ══ -->
+<section id="discord" class="dc-sec">
+  <div class="dc-sec-bg"><img src="1 (1).png" alt="" loading="lazy"></div>
+  <div class="dc-inner">
+    <div data-r="left">
+      <div class="eyebrow" style="color:#7289da" data-en="Community Hub" data-ar="مركز المجتمع">Community Hub</div>
+      <h2 class="sec-title"><span data-en="Our Discord<br>" data-ar="ديسكورد<br>">Our Discord<br></span><span style="color:#7289da" data-en="Server" data-ar="السيرفر">Server</span></h2>
+      <p class="dc-txt" data-en="The Brotherhood doesn't stop when you log off GTA. Our Discord is where rides are planned, heists are organised, griefers are reported, and brothers actually connect." data-ar="الأخوّة لا تتوقف عندما تخرج من GTA. ديسكوردنا هو المكان الذي تُخطط فيه الرحلات، وتُنظم الهيست، ويُبلَّغ عن المزعجين، ويتواصل الإخوة فعلاً.">The Brotherhood doesn't stop when you log off GTA. Our Discord is where rides are planned, heists are organised, griefers are reported, and brothers actually connect.</p>
+      <div class="dc-feats">
+        <div class="dc-feat" data-en="Mission planning & ride coordination" data-ar="تخطيط المهام وتنسيق الرحلات">Mission planning & ride coordination</div>
+        <div class="dc-feat" data-en="MC business sell alerts & backup calls" data-ar="تنبيهات بيع الأعمال وطلبات النجدة">MC business sell alerts & backup calls</div>
+        <div class="dc-feat" data-en="Member ranking & patch progression" data-ar="تصنيف الأعضاء والترقي في المراتب">Member ranking & patch progression</div>
+        <div class="dc-feat" data-en="Anti-grief reports & griefer blacklist" data-ar="بلاغات مكافحة الإزعاج وقائمة الحظر">Anti-grief reports & griefer blacklist</div>
+        <div class="dc-feat" data-en="Weekly events & tournament announcements" data-ar="فعاليات أسبوعية وإعلانات البطولات">Weekly events & tournament announcements</div>
+        <div class="dc-feat" data-en="Chill channels — life outside the game" data-ar="قنوات استرخاء — الحياة خارج اللعبة">Chill channels — life outside the game</div>
+      </div>
+    </div>
+    <div data-r="right">
+      <div class="dc-card">
+        <span class="dc-card-ico">🎮</span>
+        <div class="dc-card-name">V-TWIN BROTHERHOOD</div>
+        <div class="dc-card-sub" data-en="GTA Online MC Community" data-ar="مجتمع GTA Online MC">GTA Online MC Community</div>
+        <div class="dc-online" data-en="Server Online" data-ar="السيرفر يعمل">Server Online</div>
+        <a href="https://discord.gg/M8JjGRSwhC" target="_blank" class="btn btn-full" style="background:#5865f2;color:#fff;margin-bottom:1rem" data-en="Join the Discord Server" data-ar="انضم لسيرفر Discord">Join the Discord Server</a>
+        <div style="font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase" data-en="All Platforms Welcome" data-ar="جميع المنصات مرحب بها">All Platforms Welcome</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="sec">
+  <div class="sec-inner">
+    <div data-r>
+      <div class="eyebrow" data-en="Member Voices" data-ar="أصوات الأعضاء">Member Voices</div>
+      <h2 class="sec-title" data-en="What Brothers<br>Say" data-ar="ماذا يقول<br>الإخوة">What Brothers<br>Say</h2>
+    </div>
+    <div class="testi-grid" data-stagger>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"I came from a crew that just griefed each other. V-Twin is nothing like that. First session someone escorted my full cargo sell without even being asked."' data-ar='"جئت من كرو يضايق بعضه. V-Twin ليس هكذا إطلاقاً. في أول جلسة، رافق أحدهم عملية بيعي الكاملة دون أن يُطلب منه."'>"I came from a crew that just griefed each other. V-Twin is nothing like that. First session someone escorted my full cargo sell without even being asked."</div><div class="testi-auth"><div class="testi-av">🏍️</div><div><div class="testi-name">NightRider_99</div><div class="testi-role" data-en="Full Patch Member" data-ar="عضو كامل">Full Patch Member</div></div></div></div>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"The Discord is what makes this different. I log on, theres always a session going. It doesnt feel like a game anymore — feels like a real club."' data-ar='"الديسكورد هو ما يجعل هذا مختلفاً. أدخل وهناك دائماً جلسة جارية. لا يبدو كلعبة بعد الآن — يشعر كنادي حقيقي."'>"The Discord is what makes this different. I log on, there's always a session going. It doesn't feel like a game anymore — feels like a real club."</div><div class="testi-auth"><div class="testi-av">⚙️</div><div><div class="testi-name">GearHead_V</div><div class="testi-role" data-en="Full Patch Member" data-ar="عضو كامل">Full Patch Member</div></div></div></div>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"Was a low-rank getting blown up every session. Within a week I had 4 brothers running heists with me. My rank jumped 40 levels in a month."' data-ar='"كنت رانك منخفض يُقتل في كل جلسة. في أسبوع واحد، كان لدي 4 إخوة يلعبون الهيست معي. ارتفع رانكي 40 مستوى في شهر."'>"Was a low-rank getting blown up every session. Within a week I had 4 brothers running heists with me. My rank jumped 40 levels in a month."</div><div class="testi-auth"><div class="testi-av">🔥</div><div><div class="testi-name">RookieTurned_OG</div><div class="testi-role" data-en="Prospect" data-ar="مرشح">Prospect</div></div></div></div>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"Called for backup on a griefer with an Oppressor. Had 3 brothers there in under 2 minutes. The anti-grief patrol is real and it works."' data-ar='"طلبت النجدة ضد مزعج بـ Oppressor. وصل 3 إخوة في أقل من دقيقتين. دورية مكافحة الإزعاج حقيقية وتعمل."'>"Called for backup on a griefer with an Oppressor. Had 3 brothers there in under 2 minutes. The anti-grief patrol is real and it works."</div><div class="testi-auth"><div class="testi-av">🛡️</div><div><div class="testi-name">DefendR_LX</div><div class="testi-role" data-en="Full Patch Member" data-ar="عضو كامل">Full Patch Member</div></div></div></div>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"Joining V-Twin is the best decision I made in GTA. These guys are organized, loyal, and actually fun to play with. 10/10 no question."' data-ar='"الانضمام لـ V-Twin هو أفضل قرار اتخذته في GTA. هؤلاء منظمون ومخلصون وممتعون فعلاً. 10/10 بلا أدنى شك."'>"Joining V-Twin is the best decision I made in GTA. These guys are organized, loyal, and actually fun to play with. 10/10 no question."</div><div class="testi-auth"><div class="testi-av">🌩️</div><div><div class="testi-name">StaticBolt_8</div><div class="testi-role" data-en="Full Patch Member" data-ar="عضو كامل">Full Patch Member</div></div></div></div>
+      <div class="testi-card"><div class="testi-big-q">"</div><div class="testi-stars">★★★★★</div><div class="testi-txt" data-en='"I am not a hardcore player but they made me feel valued. Casual rides, helping with missions, no pressure. Its a genuine community."' data-ar='"لست لاعباً محترفاً لكنهم جعلوني أشعر بالتقدير. رحلات عادية، مساعدة في المهام، بلا ضغط. إنه مجتمع حقيقي."'>"I'm not a hardcore player but they made me feel valued. Casual rides, helping with missions, no pressure. It's a genuine community."</div><div class="testi-auth"><div class="testi-av">🐺</div><div><div class="testi-name">WolfRider_V</div><div class="testi-role" data-en="Prospect" data-ar="مرشح">Prospect</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ALLIED ══ -->
+<section class="sec sec-alt">
+  <div class="sec-inner">
+    <div data-r><div class="eyebrow" data-en="Allies on the Road" data-ar="حلفاء على الطريق">Allies on the Road</div><h2 class="sec-title" data-en="Allied<br>Crews" data-ar="الكرو<br>المتحالفة">Allied<br>Crews</h2></div>
+    <!--
+      HOW TO ADD CREW LOGO:
+      Place logo image in allied-logos/ folder
+      e.g. allied-logos/pharaohs.png
+      If image missing, emoji fallback shows automatically.
+    -->
+    <div class="allied-grid" data-stagger>
+
+      <div class="allied-card">
+        <div class="allied-logo">
+          <img src="allied-logos/pharaohs.png" alt="IIIPHARAOHSIIII"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="allied-logo-fallback" style="display:none">🔱</span>
+        </div>
+        <div class="allied-name">IIIPHARAOHSIIII</div>
+        <div class="allied-tag-pill">PHAR</div>
+      </div>
+
+      <div class="allied-card">
+        <div class="allied-logo">
+          <img src="allied-logos/vigilante.png" alt="Vigilante Aces"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="allied-logo-fallback" style="display:none">💀</span>
+        </div>
+        <div class="allied-name">Vigilante Aces</div>
+        <div class="allied-tag-pill">ACES</div>
+      </div>
+
+      <div class="allied-card">
+        <div class="allied-logo">
+          <img src="allied-logos/victory.png" alt="Victory Team"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="allied-logo-fallback" style="display:none">🌙</span>
+        </div>
+        <div class="allied-name">Victory Team</div>
+        <div class="allied-tag-pill">VWIN</div>
+      </div>
+
+      <div class="allied-card">
+        <div class="allied-logo">
+          <img src="allied-logos/kaithkaith.png" alt="Kaith Rebels"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="allied-logo-fallback" style="display:none">🦅</span>
+        </div>
+        <div class="allied-name">Kaith Rebels</div>
+        <div class="allied-tag-pill">HOPE</div>
+      </div>
+
+      <div class="allied-card allied-open">
+        <span data-en="Your Crew?" data-ar="كروك هنا؟">Your Crew?</span>
+        <a href="#join" data-en="Apply for Alliance" data-ar="تقدم للتحالف">Apply for Alliance</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ RULES ══ -->
+<section class="sec">
+  <div class="sec-inner">
+    <div data-r><div class="eyebrow" data-en="The Code" data-ar="الضابط">The Code</div><h2 class="sec-title" data-en="Brotherhood<br>Rules" data-ar="قواعد<br>الأخوّة">Brotherhood<br>Rules</h2></div>
+    <div class="rules-list" data-stagger>
+      <div class="rule"><div class="rule-n">01</div><div class="rule-body"><strong data-en="Brothers Before All" data-ar="الإخوة فوق الجميع">Brothers Before All</strong><span data-en="If a member calls for backup, you answer. We don't leave brothers hanging — in session or in life." data-ar="إذا طلب عضو النجدة، تستجيب. لا ندع الإخوة يتعرضون للأذى — في الجلسة أو في الحياة.">If a member calls for backup, you answer. We don't leave brothers hanging — in session or in life.</span></div></div>
+      <div class="rule"><div class="rule-n">02</div><div class="rule-body"><strong data-en="No Friendly Fire" data-ar="لا نيران صديقة">No Friendly Fire</strong><span data-en="Never attack a fellow member without consent. Club vs club sparring in private sessions only." data-ar="لا تهاجم أي عضو دون موافقته. المبارزة بين الأعضاء في الجلسات الخاصة فقط.">Never attack a fellow member without consent. Club vs club sparring in private sessions only.</span></div></div>
+      <div class="rule"><div class="rule-n">03</div><div class="rule-body"><strong data-en="Respect is Non-Negotiable" data-ar="الاحترام غير قابل للتفاوض">Respect is Non-Negotiable</strong><span data-en="Zero tolerance for harassment or toxicity toward members, allies, or newcomers. You wear the patch." data-ar="صفر تسامح مع التحرش أو السمية تجاه الأعضاء أو الحلفاء أو القادمين الجدد. أنت تحمل الشارة.">Zero tolerance for harassment or toxicity toward members, allies, or newcomers. You wear the patch.</span></div></div>
+      <div class="rule"><div class="rule-n">04</div><div class="rule-body"><strong data-en="Stay Active" data-ar="ابق نشطاً">Stay Active</strong><span data-en="At least one session per week. Life happens — just let us know if you're going quiet. Ghost drops get removed." data-ar="جلسة واحدة على الأقل في الأسبوع. الحياة تحدث — فقط أخبرنا إذا ستغيب. الاختفاء بلا إشعار يؤدي للإزالة.">At least one session per week. Life happens — just let us know if you're going quiet. Ghost drops get removed.</span></div></div>
+      <div class="rule"><div class="rule-n">05</div><div class="rule-body"><strong data-en="Be on Discord" data-ar="كن على Discord">Be on Discord</strong><span data-en="Not required every session, but Discord is the clubhouse. Check in, coordinate, be present." data-ar="ليس مطلوباً في كل جلسة، لكن Discord هو نادينا. تفقد، نسق، كن حاضراً.">Not required every session, but Discord is the clubhouse. Check in, coordinate, be present.</span></div></div>
+      <div class="rule"><div class="rule-n">06</div><div class="rule-body"><strong data-en="No Griefing" data-ar="لا إزعاج">No Griefing</strong><span data-en="We are the counter to griefers — not one of them. No destroying business stock, no trolling randoms unprovoked." data-ar="نحن نواجه المزعجين — لسنا منهم. لا تدمير مخزون الأعمال، لا إيذاء الغرباء بلا سبب.">We are the counter to griefers — not one of them. No destroying business stock, no trolling randoms unprovoked.</span></div></div>
+      <div class="rule"><div class="rule-n">07</div><div class="rule-body"><strong data-en="Earn Your Patch" data-ar="اكسب شارتك">Earn Your Patch</strong><span data-en="Prospects ride for 2 weeks minimum before full patch. Show loyalty, contribute. The patch means something here." data-ar="المرشحون يركبون لأسبوعين على الأقل قبل الحصول على الشارة الكاملة. أظهر الولاء، اساهم. الشارة تعني شيئاً هنا.">Prospects ride for 2 weeks minimum before full patch. Show loyalty, contribute. The patch means something here.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOIN ══ -->
+<section id="join" class="join-sec">
+  <img class="join-bg-img" src="1 (3).png" alt="" loading="lazy">
+  <div class="join-overlay"></div>
+  <div class="join-wm">VTWB</div>
+  <div class="join-inner" data-r="zoom">
+    <div class="eyebrow" style="justify-content:center" data-en="Become a Prospect" data-ar="كن مرشحاً">Become a Prospect</div>
+    <h2 class="join-title"><span data-en="Ride" data-ar="اركب">Ride</span><br><span style="color:var(--cr)" data-en="With Us" data-ar="معنا">With Us</span></h2>
+    <p class="join-sub" data-en="The Brotherhood isn't just any crew. We're looking for riders who want more than a tag next to their name. Apply, prove yourself, earn your patch." data-ar="الأخوّة ليست أي كرو. نبحث عن راكبين يريدون أكثر من مجرد اسم. قدّم طلبك، أثبت نفسك، اكسب شارتك.">The Brotherhood isn't just any crew. We're looking for riders who want more than a tag next to their name. Apply, prove yourself, earn your patch.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-red">🏍️ <span data-en="Apply on Rockstar SC" data-ar="قدّم على Rockstar SC">Apply on Rockstar SC</span></a>
+      <a href="#" class="btn btn-dc">🎮 <span data-en="Join Discord First" data-ar="انضم للديسكورد أولاً">Join Discord First</span></a>
+    </div>
+    <div class="steps-row" data-stagger>
+      <div class="step-item"><div class="step-num">01</div><div class="step-ttl" data-en="Apply" data-ar="قدّم">Apply</div><div class="step-desc" data-en="Rockstar SC or drop into the Discord server" data-ar="Rockstar SC أو ادخل سيرفر Discord">Rockstar SC or drop into the Discord server</div></div>
+      <div class="step-item"><div class="step-num">02</div><div class="step-ttl" data-en="Interview" data-ar="مقابلة">Interview</div><div class="step-desc" data-en="Quick casual voice chat with an officer" data-ar="دردشة صوتية سريعة مع ضابط">Quick casual voice chat with an officer</div></div>
+      <div class="step-item"><div class="step-num">03</div><div class="step-ttl" data-en="Prospect" data-ar="مرشح">Prospect</div><div class="step-desc" data-en="Ride 2 weeks — show up & contribute" data-ar="اركب أسبوعين — احضر وساهم">Ride 2 weeks — show up & contribute</div></div>
+      <div class="step-item"><div class="step-num">04</div><div class="step-ttl" data-en="Full Patch" data-ar="شارة كاملة">Full Patch</div><div class="step-desc" data-en="Earn your patch. Welcome home, brother" data-ar="اكسب شارتك. مرحباً بك أيها الأخ">Earn your patch. Welcome home, brother</div></div>
+    </div>
+    <div class="plat-row">
+      <span class="plat-tag">PlayStation</span>
+      <span class="plat-tag">Xbox</span>
+      <span class="plat-tag">PC</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="fl">V-TWIN BROTHERHOOD</div>
+      <div class="fs" data-en="GTA Online MC Crew · Est. 2025" data-ar="كرو GTA Online · تأسس 2025">GTA Online MC Crew · Est. 2025</div>
+      <p data-en="We ride together. We fight together. No brother left behind on the streets of Los Santos." data-ar="نركب معاً. نقاتل معاً. لا يُترك أي أخ خلفنا في شوارع لوس سانتوس.">We ride together. We fight together. No brother left behind on the streets of Los Santos.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Navigate" data-ar="التنقل">Navigate</h4>
+      <ul>
+        <li><a href="#about" data-en="About" data-ar="عن الكرو">About</a></li>
+        <li><a href="#manifesto" data-en="Manifesto" data-ar="مانيفستو">Manifesto</a></li>
+        <li><a href="#activities" data-en="Activities" data-ar="الأنشطة">Activities</a></li>
+        <li><a href="#members" data-en="Roster" data-ar="الأعضاء">Roster</a></li>
+        <li><a href="#join" data-en="Join Us" data-ar="انضم إلينا">Join Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Community" data-ar="المجتمع">Community</h4>
+      <ul>
+        <li><a href="https://discord.gg/M8JjGRSwhC" data-en="Discord Server" data-ar="سيرفر Discord">Discord Server</a></li>
+        <li><a href="#" data-en="Rockstar Social Club" data-ar="نادي Rockstar الاجتماعي">Rockstar Social Club</a></li>
+        <li><a href="#" data-en="Instagram" data-ar="إنستغرام">Instagram</a></li>
+        <li><a href="#" data-en="Apply for Alliance" data-ar="تقدم للتحالف">Apply for Alliance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Support" data-ar="الدعم">Support</h4>
+      <ul>
+        <li><a href="#" data-en="Code of Conduct" data-ar="قواعد السلوك">Code of Conduct</a></li>
+        <li><a href="#" data-en="Report a Member" data-ar="الإبلاغ عن عضو">Report a Member</a></li>
+        <li><a href="#" data-en="Griefer Blacklist" data-ar="القائمة السوداء">Griefer Blacklist</a></li>
+        <li><a href="#" data-en="Contact Leadership" data-ar="التواصل مع القيادة">Contact Leadership</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div data-en="© 2026 V-Twin Brotherhood. Not affiliated with Rockstar Games." data-ar="© 2026 V-Twin Brotherhood. غير مرتبط بـ Rockstar Games.">© 2026 V-Twin Brotherhood. Not affiliated with Rockstar Games.</div>
+    <div class="footer-bottom-links">
+      <a href="#" data-en="Privacy" data-ar="الخصوصية">Privacy</a>
+      <a href="#" data-en="Rules" data-ar="القواعد">Rules</a>
+      <a href="#" data-en="Contact" data-ar="تواصل">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ── THEME ── */
+function setTheme(t, btn) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.querySelectorAll('.theme-panel button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('vtwb-theme', t);
+}
+(function(){ const t = localStorage.getItem('vtwb-theme'); if(t){ document.documentElement.setAttribute('data-theme',t); document.querySelector(`.theme-panel button[data-theme="${t}"]`)?.classList.add('active'); }})();
+
+/* ── LANG ── */
+function setLang(lang, btn) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('vtwb-lang', lang);
+  // Update all elements with data-en / data-ar
+  document.querySelectorAll(`[data-${lang}]`).forEach(el => {
+    const txt = el.getAttribute(`data-${lang}`);
+    if (!txt) return;
+    if (el.children.length === 0 || el.tagName === 'A' || el.tagName === 'SPAN' || el.tagName === 'P' || el.tagName === 'STRONG' || el.tagName === 'DIV' || el.tagName === 'H2' || el.tagName === 'H4' || el.tagName === 'SMALL') {
+      el.innerHTML = txt;
+    }
+  });
+  // Set direction
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+}
+(function(){ const l = localStorage.getItem('vtwb-lang'); if(l){ const btn = document.querySelector(`.lang-btn[onclick*="${l}"]`); if(btn) setLang(l, btn); }})();
+
+/* ── NAV HAMBURGER ── */
+const hamBtn = document.getElementById('hamBtn');
+const drawer = document.getElementById('mobDrawer');
+const toggleDrawer = (open) => {
+  hamBtn.classList.toggle('open', open);
+  drawer.classList.toggle('open', open);
+  hamBtn.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+};
+hamBtn.addEventListener('click', () => toggleDrawer(!drawer.classList.contains('open')));
+document.querySelectorAll('.mob-link').forEach(a => a.addEventListener('click', () => toggleDrawer(false)));
+
+/* ── SCROLL REVEAL ── */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('[data-r],[data-stagger]').forEach(el => revObs.observe(el));
+
+/* ── COUNTER ── */
+function runCounter(el) {
+  const target = parseInt(el.dataset.count), dur = 1500;
+  let start = null;
+  const tick = (ts) => {
+    if (!start) start = ts;
+    const prog = Math.min((ts - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - prog, 3);
+    el.textContent = Math.floor(ease * target) + '+';
+    if (prog < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const ctObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.querySelectorAll('[data-count]').forEach(runCounter); ctObs.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+const sb = document.querySelector('.stats-bar');
+if (sb) ctObs.observe(sb);
+
+/* ── NAV SCROLL STYLE ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').style.background = window.scrollY > 60 ? 'rgba(6,6,8,.99)' : 'rgba(6,6,8,.96)';
+}, { passive: true });
+
+/* ── PARALLAX IMG DIVIDER ── */
+const pImg = document.getElementById('parallaxImg');
+if (pImg) {
+  window.addEventListener('scroll', () => {
+    const rect = pImg.parentElement.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      const p = (rect.top / window.innerHeight) * 30;
+      pImg.style.transform = `translateY(${p}px)`;
+    }
+  }, { passive: true });
+}
+
+/* ── HERO PARALLAX BG ── */
+const heroBg = document.getElementById('heroBg');
+window.addEventListener('scroll', () => {
+  if (heroBg) heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.3}px)`;
+}, { passive: true });
+setTimeout(() => heroBg?.classList.add('loaded'), 200);
+
+/* ── 3D CARD TILT ── */
+const tiltCard = document.getElementById('tiltCard');
+if (tiltCard) {
+  tiltCard.addEventListener('mousemove', e => {
+    const r = tiltCard.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    tiltCard.style.transform = `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+  });
+  tiltCard.addEventListener('mouseleave', () => {
+    tiltCard.style.transform = '';
+    tiltCard.style.transition = 'transform .5s ease';
+    setTimeout(() => tiltCard.style.transition = '', 500);
+  });
+}
+
+/* ── 3D TILT — ACTIVITY CARDS ── */
+document.querySelectorAll('.act-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 6}deg) translateY(-5px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform .4s ease,border-color .25s,box-shadow .25s';
+    setTimeout(() => card.style.transition = '', 400);
+  });
+});
+
+/* ── FLOATING PARTICLES ── */
+const pContainer = document.getElementById('particles');
+if (pContainer) {
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${1+Math.random()*2}px;
+      height:${1+Math.random()*2}px;
+      animation-duration:${6+Math.random()*10}s;
+      animation-delay:${Math.random()*8}s;
+    `;
+    pContainer.appendChild(p);
+  }
+}
+
+
+
+/* ── ACTIVE NAV LINK ON SCROLL ── */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+  navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+}, { passive: true });
+</script>
+</body>
+</html>
