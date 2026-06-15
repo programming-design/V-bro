@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#060608">
-<link rel="icon" href="logo.png" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-<link rel="icon" type="image/png" sizes="16x16" href="logo.png">
 <title>V-TWIN BROTHERHOOD — GTA Online Crew</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -622,192 +619,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 5%
   .footer-grid{grid-template-columns:1fr}
   .footer-col:not(:first-child){display:none}
 }
-
-/* ══════════════════════════════════════
-   RTL — ARABIC FULL SUPPORT
-══════════════════════════════════════ */
-html[dir="rtl"] body { direction: rtl; text-align: right; }
-
-/* NAV */
-html[dir="rtl"] nav { flex-direction: row-reverse; }
-html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
-html[dir="rtl"] .nav-links a::after { transform-origin: right; }
-html[dir="rtl"] .nav-brand small { letter-spacing: .1em; }
-html[dir="rtl"] .nav-logo { flex-direction: row-reverse; }
-
-/* MOBILE DRAWER */
-html[dir="rtl"] .mob-drawer { transform: translateX(-100%); }
-html[dir="rtl"] .mob-drawer.open { transform: translateX(0); }
-html[dir="rtl"] .mob-drawer a:hover { transform: translateX(-8px); }
-html[dir="rtl"] .mob-drawer-bottom { flex-direction: row-reverse; }
-
-/* HERO */
-html[dir="rtl"] .hero-content { direction: rtl; }
-html[dir="rtl"] .hero-eyebrow { flex-direction: row-reverse; }
-html[dir="rtl"] .hero-actions { flex-direction: row-reverse; }
-html[dir="rtl"] .hero-line1,
-html[dir="rtl"] .hero-line2 {
-  font-family: "Cairo", "Black Ops One", sans-serif;
-  letter-spacing: 0;
-}
-
-/* TICKER */
-html[dir="rtl"] .ticker-inner { animation-direction: reverse; }
-
-/* EYEBROW */
-html[dir="rtl"] .eyebrow { flex-direction: row-reverse; }
-html[dir="rtl"] .eyebrow::after { margin-right: auto; margin-left: 0; }
-
-/* ABOUT */
-html[dir="rtl"] .about-grid { direction: rtl; }
-html[dir="rtl"] .about-feats .af { flex-direction: row-reverse; text-align: right; }
-html[dir="rtl"] .about-badge { left: auto; right: 50%; transform: translateX(50%); }
-
-/* MANIFESTO */
-html[dir="rtl"] .manifesto-body {
-  border-left: none;
-  border-right: 2px solid var(--cr);
-  padding-left: 0;
-  padding-right: 1.8rem;
-}
-html[dir="rtl"] .pillars { direction: rtl; }
-
-/* STATS */
-html[dir="rtl"] .stats-bar { direction: rtl; }
-html[dir="rtl"] .stat-item { border-right: none; border-left: 1px solid var(--border); }
-html[dir="rtl"] .stat-item:last-child { border-left: none; }
-html[dir="rtl"] .stat-item::after { transform-origin: right; }
-
-/* MEMBERS */
-html[dir="rtl"] .mem-grid { direction: rtl; }
-html[dir="rtl"] .mem-stats { flex-direction: row-reverse; }
-html[dir="rtl"] .mem-card::after { transform-origin: right; }
-
-/* ACTIVITIES */
-html[dir="rtl"] .act-grid { direction: rtl; }
-html[dir="rtl"] .act-card::before { transform-origin: right; }
-
-/* DISCORD */
-html[dir="rtl"] .dc-inner { direction: rtl; }
-html[dir="rtl"] .dc-feats .dc-feat { flex-direction: row-reverse; }
-html[dir="rtl"] .dc-feat::before { order: 2; }
-
-/* TESTIMONIALS */
-html[dir="rtl"] .testi-grid { direction: rtl; }
-html[dir="rtl"] .testi-auth { flex-direction: row-reverse; }
-html[dir="rtl"] .testi-big-q { right: auto; left: 1rem; }
-
-/* ALLIED */
-html[dir="rtl"] .allied-grid { direction: rtl; }
-
-/* RULES */
-html[dir="rtl"] .rules-list { direction: rtl; }
-html[dir="rtl"] .rule { flex-direction: row-reverse; }
-html[dir="rtl"] .rule:hover { padding-left: 0; padding-right: .5rem; }
-html[dir="rtl"] .rule-n { text-align: left; }
-
-/* JOIN */
-html[dir="rtl"] .join-inner { direction: rtl; }
-html[dir="rtl"] .steps-row { direction: rtl; flex-direction: row-reverse; }
-html[dir="rtl"] .step-item:not(:last-child)::after { content: "←"; left: -6px; right: auto; }
-html[dir="rtl"] .plat-row { flex-direction: row-reverse; }
-
-/* FOOTER */
-html[dir="rtl"] .footer-grid { direction: rtl; }
-html[dir="rtl"] .footer-col ul a:hover { padding-left: 0; padding-right: .3rem; }
-html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-html[dir="rtl"] .footer-bottom-links { flex-direction: row-reverse; }
-
-/* CONTROLS */
-html[dir="rtl"] .controls-wrap { right: auto; left: 0; }
-html[dir="rtl"] .theme-panel { border-right: 1px solid var(--border); border-left: none; border-radius: 0 6px 6px 0; }
-html[dir="rtl"] .theme-panel button.active { box-shadow: inset -2px 0 0 #fff; }
-html[dir="rtl"] .theme-panel button::after { right: auto; left: calc(100% + 8px); }
-html[dir="rtl"] .lang-toggle { border-right: 1px solid var(--border); border-left: none; border-radius: 0 6px 6px 0; }
-
-/* LANG TOGGLE MOBILE */
-@media(max-width:768px) {
-  html[dir="rtl"] .controls-wrap { left: 0; right: 0; }
-  html[dir="rtl"] .theme-panel { border-radius: 4px; border: 1px solid var(--border); }
-  html[dir="rtl"] .lang-toggle { border-radius: 4px; border: 1px solid var(--border); }
-}
-
-/* PAGE HEADER (friends/events) */
-html[dir="rtl"] .page-header-inner { direction: rtl; }
-html[dir="rtl"] .breadcrumb { flex-direction: row-reverse; }
-
-/* FRIENDS PAGE */
-html[dir="rtl"] .search-bar { flex-direction: row-reverse; }
-html[dir="rtl"] .search-input-wrap::before { left: auto; right: .9rem; }
-html[dir="rtl"] .search-input { padding: .65rem 2.4rem .65rem .9rem; }
-html[dir="rtl"] .filter-btns { flex-direction: row-reverse; }
-html[dir="rtl"] .friends-grid { direction: rtl; }
-html[dir="rtl"] .friend-av-wrap { margin-right: 0; }
-html[dir="rtl"] .friend-actions { flex-direction: row-reverse; }
-html[dir="rtl"] .friend-stats { flex-direction: row-reverse; }
-html[dir="rtl"] .friend-status-txt { flex-direction: row-reverse; }
-html[dir="rtl"] .ally-grid { direction: rtl; }
-html[dir="rtl"] .ally-card { flex-direction: row-reverse; }
-html[dir="rtl"] .ally-info { text-align: right; }
-html[dir="rtl"] .ally-actions { flex-direction: row-reverse; }
-html[dir="rtl"] .add-friend-box { direction: rtl; }
-html[dir="rtl"] .friends-section-title { flex-direction: row-reverse; }
-html[dir="rtl"] .friend-card::after { transform-origin: right; }
-
-/* EVENTS PAGE */
-html[dir="rtl"] .countdown-banner { flex-direction: row-reverse; direction: rtl; }
-html[dir="rtl"] .countdown-timer { flex-direction: row-reverse; }
-html[dir="rtl"] .events-tabs { flex-direction: row-reverse; }
-html[dir="rtl"] .events-grid { direction: rtl; }
-html[dir="rtl"] .event-status { right: auto; left: .7rem; }
-html[dir="rtl"] .event-date { flex-direction: row-reverse; }
-html[dir="rtl"] .event-meta { flex-direction: row-reverse; }
-html[dir="rtl"] .event-card::before { transform-origin: right; }
-html[dir="rtl"] .hof-top { direction: rtl; }
-html[dir="rtl"] .hof-list { direction: rtl; }
-html[dir="rtl"] .hof-row { grid-template-columns: auto 1fr 40px; }
-html[dir="rtl"] .hof-row-info { flex-direction: row-reverse; text-align: right; }
-html[dir="rtl"] .hof-badge-row { flex-direction: row-reverse; }
-html[dir="rtl"] .wanted-board { direction: rtl; }
-html[dir="rtl"] .wanted-header { flex-direction: row-reverse; }
-html[dir="rtl"] .wanted-grid { direction: rtl; }
-html[dir="rtl"] .xp-inner { direction: rtl; }
-html[dir="rtl"] .xp-header { flex-direction: row-reverse; }
-html[dir="rtl"] .xp-nums { flex-direction: row-reverse; }
-html[dir="rtl"] .xp-bar-fill { border-radius: 2px; }
-html[dir="rtl"] .page-footer { flex-direction: row-reverse; }
-
-/* FONT: Arabic uses Cairo */
-html[dir="rtl"] .sec-title,
-html[dir="rtl"] .page-title,
-html[dir="rtl"] .join-title,
-html[dir="rtl"] .hof-wrap,
-html[dir="rtl"] .nav-brand,
-html[dir="rtl"] .footer-brand .fl {
-  font-family: "Cairo", sans-serif;
-  letter-spacing: 0;
-  line-height: 1.15;
-}
-html[dir="rtl"] .eyebrow,
-html[dir="rtl"] .stat-lbl,
-html[dir="rtl"] .act-title,
-html[dir="rtl"] .mem-name,
-html[dir="rtl"] .mem-rank,
-html[dir="rtl"] .pillar-title,
-html[dir="rtl"] .dc-card-name,
-html[dir="rtl"] .testi-name,
-html[dir="rtl"] .allied-name,
-html[dir="rtl"] .event-title,
-html[dir="rtl"] .hof-name,
-html[dir="rtl"] .hof-row-name,
-html[dir="rtl"] .ally-name,
-html[dir="rtl"] .friend-name,
-html[dir="rtl"] .footer-col h4,
-html[dir="rtl"] .step-ttl {
-  font-family: "Cairo", sans-serif;
-  letter-spacing: 0;
-}
-
 </style>
 </head>
 <body>
@@ -841,8 +652,6 @@ html[dir="rtl"] .step-ttl {
     <li><a href="#activities" data-en="Rides" data-ar="الأنشطة">Rides</a></li>
     <li><a href="#members" data-en="Roster" data-ar="الأعضاء">Roster</a></li>
     <li><a href="#discord" data-en="Discord" data-ar="ديسكورد">Discord</a></li>
-    <li><a href="friends.html" data-en="Friends" data-ar="الأصدقاء">Friends</a></li>
-    <li><a href="events.html" data-en="Events" data-ar="الفعاليات">Events</a></li>
     <li><a href="#join" class="nav-cta" data-en="Prospect" data-ar="انضم">Prospect</a></li>
   </ul>
   <button class="hamburger" id="hamBtn" aria-label="Menu" aria-expanded="false">
@@ -857,8 +666,6 @@ html[dir="rtl"] .step-ttl {
   <a href="#activities" class="mob-link" data-en="Rides" data-ar="الأنشطة">Rides</a>
   <a href="#members" class="mob-link" data-en="Roster" data-ar="الأعضاء">Roster</a>
   <a href="#discord" class="mob-link" data-en="Discord" data-ar="ديسكورد">Discord</a>
-  <a href="friends.html" class="mob-link" data-en="Friends" data-ar="الأصدقاء">Friends</a>
-  <a href="events.html" class="mob-link" data-en="Events" data-ar="الفعاليات">Events</a>
   <a href="#join" class="mob-cta mob-link" data-en="Prospect Now" data-ar="انضم الآن">Prospect Now</a>
   <div class="mob-drawer-bottom">
     <a href="https://discord.gg/M8JjGRSwhC" target="_blank" >Discord</a>
@@ -1005,7 +812,7 @@ html[dir="rtl"] .step-ttl {
     </div>
     <div class="act-grid" data-stagger>
       <div class="act-card">
-        <div class="act-img"><img src="MC.png" alt="MC Business" loading="lazy"></div>
+        <div class="act-img"><img src="1 (5).png" alt="MC Business" loading="lazy"></div>
         <div class="act-body"><div class="act-title" data-en="MC Business" data-ar="أعمال MC">MC Business</div><div class="act-desc" data-en="We run the full MC empire together — coordinated sells across all businesses, zero losses, maximum profit, maximum protection." data-ar="ندير إمبراطورية MC الكاملة معاً — مبيعات منسقة عبر جميع الأعمال، صفر خسائر، أقصى ربح، أقصى حماية.">We run the full MC empire together — coordinated sells across all businesses, zero losses, maximum profit, maximum protection.</div><span class="act-tag" data-en="Daily Operations" data-ar="عمليات يومية">Daily Operations</span></div>
       </div>
       <div class="act-card">
@@ -1013,19 +820,19 @@ html[dir="rtl"] .step-ttl {
         <div class="act-body"><div class="act-title" data-en="Crew Rides" data-ar="رحلات الكرو">Crew Rides</div><div class="act-desc" data-en="Weekly club rides across the map. San Andreas, Blaine County, the city. Just bikes, brothers, and the open road." data-ar="رحلات أسبوعية عبر الخريطة. سان أندرياس، بلين كاونتي، المدينة. فقط دراجات، وإخوة، والطريق المفتوح.">Weekly club rides across the map. San Andreas, Blaine County, the city. Just bikes, brothers, and the open road.</div><span class="act-tag" data-en="Every Weekend" data-ar="كل أسبوع">Every Weekend</span></div>
       </div>
       <div class="act-card">
-        <div class="act-img"><img src="Heists.png" alt="Heists" loading="lazy"></div>
+        <div class="act-ico-ph">💰</div>
         <div class="act-body"><div class="act-title" data-en="Heists" data-ar="هيست">Heists</div><div class="act-desc" data-en="Cayo Perico, Doomsday, Casino. We run them clean, split fair, and help every member build their empire from scratch." data-ar="كايو بيريكو، يوم القيامة، الكازينو. ننفذها بنظافة، نقسم بعدل، ونساعد كل عضو على بناء إمبراطوريته.">Cayo Perico, Doomsday, Casino. We run them clean, split fair, and help every member build their empire from scratch.</div><span class="act-tag" data-en="High Priority" data-ar="أولوية عالية">High Priority</span></div>
       </div>
       <div class="act-card">
-        <div class="act-img"><img src="Wars.png" alt="Crew Wars" loading="lazy"></div>
+        <div class="act-ico-ph">⚔️</div>
         <div class="act-body"><div class="act-title" data-en="Crew Wars" data-ar="حروب الكرو">Crew Wars</div><div class="act-desc" data-en="When another crew wants smoke, they get the whole Brotherhood. Organized PvP with real strategy — not random trolling." data-ar="عندما يريد كرو آخر مواجهة، يواجه الأخوّة كلها. PvP منظم باستراتيجية حقيقية.">When another crew wants smoke, they get the whole Brotherhood. Organized PvP with real strategy — not random trolling.</div><span class="act-tag" data-en="Competitive" data-ar="تنافسي">Competitive</span></div>
       </div>
       <div class="act-card">
-        <div class="act-img"><img src="Anti-Grief Patrol.png" alt="Anti-Grief Patrol" loading="lazy"></div>
-        <div class="act-body"><div class="act-title" data-en="Anti-Grief Patrol" data-ar="دورية مكافحة الإزعاج">Anti-Grief PatrolAnti-Grief Patrol</div><div class="act-desc" data-en="We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed." data-ar="نحمي الأعضاء والحلفاء من المزعجين. إذا تعرضت للهجوم في الجلسة — اتصل بالأخوّة. استجابة سريعة مضمونة.">We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed.</div><span class="act-tag" data-en="Always Active" data-ar="نشط دائماً">Always Active</span></div>
+        <div class="act-ico-ph">🛡️</div>
+        <div class="act-body"><div class="act-title" data-en="Anti-Grief Patrol" data-ar="دورية مكافحة الإزعاج">Anti-Grief Patrol</div><div class="act-desc" data-en="We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed." data-ar="نحمي الأعضاء والحلفاء من المزعجين. إذا تعرضت للهجوم في الجلسة — اتصل بالأخوّة. استجابة سريعة مضمونة.">We protect members and allies from griefers. If you're getting bombed in session — call the Brotherhood. Fast response guaranteed.</div><span class="act-tag" data-en="Always Active" data-ar="نشط دائماً">Always Active</span></div>
       </div>
       <div class="act-card">
-        <div class="act-img"><img src="Club Events.jpg" alt="Club Events" loading="lazy"></div>
+        <div class="act-ico-ph">🎯</div>
         <div class="act-body"><div class="act-title" data-en="Club Events" data-ar="فعاليات النادي">Club Events</div><div class="act-desc" data-en="Monthly internal tournaments, race nights, challenges, and reward events for the most active members in the Brotherhood." data-ar="بطولات داخلية شهرية، ليالي سباق، تحديات، وفعاليات مكافآت لأكثر الأعضاء نشاطاً.">Monthly internal tournaments, race nights, challenges, and reward events for the most active members in the Brotherhood.</div><span class="act-tag" data-en="Monthly" data-ar="شهرياً">Monthly</span></div>
       </div>
     </div>
@@ -1259,7 +1066,16 @@ html[dir="rtl"] .step-ttl {
         <div class="allied-tag-pill">VWIN</div>
       </div>
 
-     
+      <div class="allied-card">
+        <div class="allied-logo">
+          <img src="allied-logos/kaithkaith.png" alt="Kaith Rebels"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="allied-logo-fallback" style="display:none">🦅</span>
+        </div>
+        <div class="allied-name">Kaith Rebels</div>
+        <div class="allied-tag-pill">HOPE</div>
+      </div>
+
       <div class="allied-card allied-open">
         <span data-en="Your Crew?" data-ar="كروك هنا؟">Your Crew?</span>
         <a href="#join" data-en="Apply for Alliance" data-ar="تقدم للتحالف">Apply for Alliance</a>
@@ -1289,12 +1105,13 @@ html[dir="rtl"] .step-ttl {
 <section id="join" class="join-sec">
   <img class="join-bg-img" src="1 (3).png" alt="" loading="lazy">
   <div class="join-overlay"></div>
-  <div class="join-wm">VBRO</div>
+  <div class="join-wm">VTWB</div>
   <div class="join-inner" data-r="zoom">
     <div class="eyebrow" style="justify-content:center" data-en="Become a Prospect" data-ar="كن مرشحاً">Become a Prospect</div>
     <h2 class="join-title"><span data-en="Ride" data-ar="اركب">Ride</span><br><span style="color:var(--cr)" data-en="With Us" data-ar="معنا">With Us</span></h2>
     <p class="join-sub" data-en="The Brotherhood isn't just any crew. We're looking for riders who want more than a tag next to their name. Apply, prove yourself, earn your patch." data-ar="الأخوّة ليست أي كرو. نبحث عن راكبين يريدون أكثر من مجرد اسم. قدّم طلبك، أثبت نفسك، اكسب شارتك.">The Brotherhood isn't just any crew. We're looking for riders who want more than a tag next to their name. Apply, prove yourself, earn your patch.</p>
     <div class="hero-actions">
+      <a href="#" class="btn btn-red">🏍️ <span data-en="Apply on Rockstar SC" data-ar="قدّم على Rockstar SC">Apply on Rockstar SC</span></a>
       <a href="#" class="btn btn-dc">🎮 <span data-en="Join Discord First" data-ar="انضم للديسكورد أولاً">Join Discord First</span></a>
     </div>
     <div class="steps-row" data-stagger>
@@ -1372,63 +1189,22 @@ function setTheme(t, btn) {
 (function(){ const t = localStorage.getItem('vtwb-theme'); if(t){ document.documentElement.setAttribute('data-theme',t); document.querySelector(`.theme-panel button[data-theme="${t}"]`)?.classList.add('active'); }})();
 
 /* ── LANG ── */
-/* LANG */
 function setLang(lang, btn) {
   document.documentElement.setAttribute('data-lang', lang);
-  document.documentElement.setAttribute('lang', lang);
-  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   localStorage.setItem('vtwb-lang', lang);
-
-  // Translate all elements that have data-en / data-ar
-  const tags = ['A','SPAN','P','STRONG','DIV','H1','H2','H3','H4','SMALL','LABEL','BUTTON','LI'];
-  document.querySelectorAll('[data-en],[data-ar]').forEach(el => {
-    const txt = el.getAttribute('data-' + lang);
+  // Update all elements with data-en / data-ar
+  document.querySelectorAll(`[data-${lang}]`).forEach(el => {
+    const txt = el.getAttribute(`data-${lang}`);
     if (!txt) return;
-    if (!el.children.length || tags.includes(el.tagName)) {
+    if (el.children.length === 0 || el.tagName === 'A' || el.tagName === 'SPAN' || el.tagName === 'P' || el.tagName === 'STRONG' || el.tagName === 'DIV' || el.tagName === 'H2' || el.tagName === 'H4' || el.tagName === 'SMALL') {
       el.innerHTML = txt;
     }
   });
-
-  // Placeholder translations
-  document.querySelectorAll('[data-ph-' + lang + ']').forEach(el => {
-    el.placeholder = el.getAttribute('data-ph-' + lang);
-  });
-
-  // Manifesto border direction
-  document.querySelectorAll('.manifesto-body').forEach(el => {
-    if (lang === 'ar') {
-      el.style.borderLeft = 'none';
-      el.style.borderRight = '2px solid var(--cr)';
-      el.style.paddingLeft = '0';
-      el.style.paddingRight = '1.8rem';
-    } else {
-      el.style.borderRight = 'none';
-      el.style.borderLeft = '2px solid var(--cr)';
-      el.style.paddingRight = '0';
-      el.style.paddingLeft = '1.8rem';
-    }
-  });
-
-  // Controls panel — flip side
-  const cw = document.querySelector('.controls-wrap');
-  if (cw) {
-    if (window.innerWidth >= 769) {
-      if (lang === 'ar') {
-        cw.style.right = 'auto'; cw.style.left = '0';
-      } else {
-        cw.style.left = 'auto'; cw.style.right = '0';
-      }
-    }
-  }
-
-  // Back button text in footer
-  document.querySelectorAll('a[data-en]').forEach(a => {
-    const t = a.getAttribute('data-' + lang);
-    if (t) a.textContent = t;
-  });
+  // Set direction
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 }
 (function(){ const l = localStorage.getItem('vtwb-lang'); if(l){ const btn = document.querySelector(`.lang-btn[onclick*="${l}"]`); if(btn) setLang(l, btn); }})();
 
